@@ -1,63 +1,37 @@
-# import win32com.client
+import pywintypes
+import datetime
+import numpy as np
 
-# # Create an instance of the Excel application
-# excel = win32com.client.Dispatch("Excel.Application")
+def format_dates(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
 
-# # Optional: make Excel visible
-# excel.Visible = True
+    # Extract the dates from the file content
+    dates = [line.strip() for line in lines]
 
-# # Open the Excel file
-# file_path = r'D:\test\test.xlsm'
-# workbook = excel.Workbooks.Open(file_path)
+    # Convert the dates to datetime objects
+    datetime_objects = []
+    for date in dates:
+        if date != 'None':
+            datetime_objects.append(datetime.datetime.fromisoformat(date))
+        else:
+            datetime_objects.append(np.nan)
 
-# # Access a specific sheet by name
-# sheet_name = 'YJV'
-# sheet = workbook.Sheets(sheet_name)
+    # Convert the datetime objects to formatted strings
+    formatted_dates = []
+    for date in datetime_objects:
+        if isinstance(date, float):
+            formatted_dates.append(str(date) + ',')
+        else:
+            formatted_dates.append(date.strftime('%B %Y, '))
 
-# # Modify cell values
-# # Example: Set the value of cell A1
-# sheet.Cells(11, 6).Value = '4211'
+    with open(file_path, 'w') as file:
+        file.writelines(formatted_dates)
 
-# # Example: Set the value of cell B2
-# # sheet.Cells(2, 2).Value = 123
+    with open(file_path, 'r') as file:
+        text = file.readlines()
 
-# # Example: Set the value of a range of cells
-# # sheet.Range('C1:C3').Value = [1, 2, 3]
+    formatted_text = ''.join(text).replace(",", "\n")
 
-# # Optional: Save the workbook if changes were made
-# workbook.Save()
-
-# # Optional: Close the workbook
-# # workbook.Close()
-
-# # Optional: Quit the Excel application
-# # excel.Quit()
-
-# file_path = "D:/Projects/test/month.txt"
-
-# # Read the file
-# with open(file_path, 'r') as file:
-#     lines = file.readlines()
-
-# # Add a comma after each line
-# lines_with_comma = [line.strip() + ',' for line in lines]
-
-# # Write the modified lines back to the file
-# with open(file_path, 'w') as file:
-#     file.writelines(lines_with_comma)
-
-import re
-
-# Read the contents of the file
-with open('D:/Projects/test/month.txt', 'r') as file:
-    text = file.read()
-
-dates = [text[i:i+12] for i in range(0, len(text), 12)]
-
-# Print each combination on its own line
-# for date in dates:
-#     print(date)
-
-# Write the formatted content back to the file
-with open('D:/Projects/test/month.txt', 'w') as file:
-    file.write('\n'.join(dates))
+    with open(file_path, 'w') as file:
+        file.write(formatted_text)

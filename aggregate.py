@@ -1,8 +1,14 @@
+import numpy as np
+import file_import
 import win32com.client
+
 
 def aggregate_data():
     # Path to the uploaded Excel file
-    file_path = r'D:\Projects\test\test.xlsm'
+    file_path = file_import.excel_path  # take the path of the file from the user
+    bill_text_file = file_import.bill_file  # take the path of the file from the user
+    company_text_file = file_import.company_file  # take the path of the file from the user
+    month_text_file = file_import.month_file  # take the path of the file from the user
 
     # Create an instance of the Excel application
     excel = win32com.client.Dispatch("Excel.Application")
@@ -16,19 +22,19 @@ def aggregate_data():
     # Access the 'Bills List' sheet
     sheet = workbook.Sheets('Bills List')
 
-    # Initialize an empty list to store client names
+    # Initialize empty lists to store client names
     bill_no = []
     company_name = []
     month_column = []
 
     # Define the column indices (assuming 'Name' is in column 1 and 'Client' is in column 2)
-    name_column = 1
-    bill_column = 2
-    company_column = 3
-    monthly_column = 8
+    name_column = 1  # take the column number from the user
+    bill_column = 2  # take the column number from the user
+    company_column = 3  # take the column number from the user
+    monthly_column = 8  # take the column number from the user
 
     # Loop through the rows in the sheet (assuming the data starts from row 2)
-    row = 1724
+    row = 1724  # take the row number from the user
     while True:
         try:
             # Read the value of the 'Name' column
@@ -52,7 +58,6 @@ def aggregate_data():
                     company_name.append(client_name)
                     month_column.append(client_month)
 
-
             # Move to the next row
             row += 1
 
@@ -65,23 +70,19 @@ def aggregate_data():
     workbook.Close(False)
     excel.Quit()
 
-    bill_no = [int(num) for num in bill_no] 
-    # Print the list of client names
-    # print(bill_no)
-    # print(company_name)
-    # print(month_column)   
+    bill_no = [int(num) for num in bill_no]
 
-    # with open('bill_no.txt', 'w') as f:
-    #     for item in bill_no:
-    #         # Write each item on a new line
-    #         f.write("%s\n" % item)
+    with open(bill_text_file, 'w') as f:
+        for item in bill_no:
+            # Write each item on a new line
+            f.write("%s\n" % item)
 
-    # # Do the same for the company_name list
-    # with open('company_name.txt', 'w') as f:
-    #     for item in company_name:
-    #         f.write("%s\n" % item)
+    # Do the same for the company_name list
+    with open(company_text_file, 'w') as f:
+        for item in company_name:
+            f.write("%s\n" % item)
 
-    with open('month.txt', 'w') as f:
+    with open(month_text_file, 'w') as f:
         for item in month_column:
             f.write("%s\n" % item)
 

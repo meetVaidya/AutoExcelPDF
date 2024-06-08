@@ -34,7 +34,7 @@ def aggregate_data():
     monthly_column = 8  # take the column number from the user
 
     # Loop through the rows in the sheet (assuming the data starts from row 2)
-    row = 1724  # take the row number from the user
+    row = input(int("Enter the row to start from: "))  # take the row number from the user
     while True:
         try:
             # Read the value of the 'Name' column

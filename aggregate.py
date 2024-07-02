@@ -2,8 +2,7 @@ import numpy as np
 import file_import
 import win32com.client
 
-
-def aggregate_data():
+def aggregate_data(bill_sheet, row):
     # Path to the uploaded Excel file
     file_path = file_import.excel_path  # take the path of the file from the user
     bill_text_file = file_import.bill_file  # take the path of the file from the user
@@ -34,7 +33,7 @@ def aggregate_data():
     monthly_column = 8  # take the column number from the user
 
     # Loop through the rows in the sheet (assuming the data starts from row 2)
-    row = int(input("Enter the row to start from: "))  # take the row number from the user
+    row =  int(row) # take the row number from the user
     while True:
         try:
             # Read the value of the 'Name' column
@@ -45,7 +44,7 @@ def aggregate_data():
                 break
 
             # Check if the 'Name' column contains 'YJV'
-            if 'YJV' in name_value:
+            if bill_sheet in name_value:
                 # Read the value of the 'Client' column
                 client_bill = sheet.Cells(row, bill_column).Value
                 client_name = sheet.Cells(row, company_column).Value

@@ -3,7 +3,7 @@ import time
 import file_import
 import win32com.client
 
-def process_excel_data():
+def process_excel_data(sheet_name):
     print("You have 5 seconds to switch to the Excel application")
     
     # Create an instance of the Excel application
@@ -17,7 +17,7 @@ def process_excel_data():
     workbook = excel.Workbooks.Open(file_path)
 
     # Access and activate a specific sheet by name
-    sheet_name = 'YJV'
+    sheet_name = sheet_name
     sheet = workbook.Sheets(sheet_name)
     sheet.Activate()
 

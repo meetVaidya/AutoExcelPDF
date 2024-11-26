@@ -30,7 +30,7 @@ def aggregate_data(bill_sheet, row):
     name_column = 1  # take the column number from the user
     bill_column = 2  # take the column number from the user
     company_column = 3  # take the column number from the user
-    monthly_column = 8  # take the column number from the user
+    monthly_column = 11  # take the column number from the user
 
     # Loop through the rows in the sheet (assuming the data starts from row 2)
     row =  int(row) # take the row number from the user

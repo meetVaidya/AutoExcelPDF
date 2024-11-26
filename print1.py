@@ -62,10 +62,8 @@ def process_excel_data(sheet_name):
         company_counter += 1
         month_counter += 1
 
-        # Close the Excel application
-        workbook.Save()
-
-    workbook.Close()
+    # Save and close the workbook after all operations are complete
+    workbook.Save()
     print("All done!")
 
 # # Call the function

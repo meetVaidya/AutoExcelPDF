@@ -50,12 +50,10 @@ def aggregate_data(bill_sheet, row):
                 client_name = sheet.Cells(row, company_column).Value
                 client_month = sheet.Cells(row, monthly_column).Value
 
-                # Check if the client name is a number
-                if isinstance(client_bill, (int, float)):
-                    # Append the client name to the list
-                    bill_no.append(client_bill)
-                    company_name.append(client_name)
-                    month_column.append(client_month)
+                # Append the client data to the lists (accepting strings now)
+                bill_no.append(client_bill)
+                company_name.append(client_name)
+                month_column.append(client_month)
 
             # Move to the next row
             row += 1
@@ -69,7 +67,7 @@ def aggregate_data(bill_sheet, row):
     workbook.Close(False)
     excel.Quit()
 
-    bill_no = [int(num) for num in bill_no]
+    # bill_no list now contains strings, no need for int conversion
 
     with open(bill_text_file, 'w') as f:
         for item in bill_no:
